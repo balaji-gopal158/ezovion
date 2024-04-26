@@ -1,0 +1,72 @@
+<div>
+    <button class="btn btn-primary" (click)="addProduct()" >Add Product</button><br><br>
+ 
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th (click)="sort('id')">Id<span [hidden]="!reverseId">&#9660;</span><span [hidden]="reverseId">&#9650;</span></th>
+        <th (click)="sort('name')">Name <span [hidden]="!reverseName">&#9660;</span><span [hidden]="reverseName">&#9650;</span></th>
+        <th (click)="sort('catagory')">Catagory<span [hidden]="!reverseCatagory">&#9660;</span><span [hidden]="reverseCatagory">&#9650;</span></th>
+        <th (click)="sort('fullprice')">Full Price <span [hidden]="!reverseFullPrice">&#9660;</span><span [hidden]="reverseFullPrice">&#9650;</span></th>
+        <th (click)="sort('salesprice')">Sales Price <span [hidden]="!reverSalesPrice">&#9660;</span><span [hidden]="reverSalesPrice">&#9650;</span></th>
+        <th (click)="sort('availability')">Availability <span [hidden]="!reverseAvailability">&#9660;</span><span [hidden]="reverseAvailability">&#9650;</span></th>
+        <th (click)="sort('supplier')">Supplier<span [hidden]="!reverseSupplier">&#9660;</span><span [hidden]="reverseSupplier">&#9650;</span></th>
+        <th (click)="sort('discount')">Discount <span [hidden]="!reverseDiscount">&#9660;</span><span [hidden]="reverseDiscount">&#9650;</span></th>
+         <th>Action</th>
+      </tr>
+    </thead>
+    <tbody  >
+
+      <tr *ngFor="let product of products">
+        <td><input type="text"  class="form-control"  appNumeric [(ngModel)]="product.id" name="id" #id="ngModel" pattern="[0-9]{4}" required ngModel [disabled]="product.disabled" ngModel required #name="ngModel">
+        <span class="errorField" *ngIf="id.touched&&id.errors?.['required']"> Required Field </span>
+        <span class="errorField" *ngIf="id.touched&&id.errors?.['pattern']">  Only 4 Numbers Allowed</span>
+        
+        </td>
+        <td><input type="text"  class="form-control"  appCharacter  [(ngModel)]="product.name" #pdtname="ngModel" ngModel [disabled]="product.disabled"  required>
+          <span class="errorField" *ngIf="pdtname.touched &&pdtname.errors?.['required']">Required Field Only Character and Spaces Allowed</span> 
+        </td>
+
+        <td><input type="text"  class="form-control" appCharacter  [(ngModel)]="product.catagory"   [disabled]="product.disabled" ngModel required #catagory="ngModel" id="sel1">
+          <span class="errorField" *ngIf="catagory.touched&&catagory.errors?.['required']">Required Field Only Character and Spaces Allowed</span>
+          </td>
+
+
+        <td><input type="text" appPrice class="form-control"  [(ngModel)]="product.fullprice" ngModel #fullprice="ngModel"  [disabled]="product.disabled" required>
+          <span class="errorField" *ngIf="fullprice.touched &&fullprice.errors?.['required']">Required Field Only Numbers With 2 digit Precision values Allowed</span>
+        
+        </td>
+
+        <td><input type="text" appPrice class="form-control"  [(ngModel)]="product.salesprice" #salesprice="ngModel" required ngModel [disabled]="product.disabled">
+        <span class="errorField" *ngIf="salesprice.touched&&salesprice.errors?.['required']">Required Field Only Numbers With 2 digit Precision values Allowed</span>
+        
+        </td>
+
+        <td>
+          <input type="text"  class="form-control" [(ngModel)]="product.availability" id="sel1" appCharacter #availability="ngModel" required ngModel [disabled]="product.disabled"> 
+          <span  class="errorField"*ngIf="availability.touched&&availability.errors?.['required']">Required Field Only Character and Spaces Allowed</span> 
+        </td>
+
+        <td>
+          <input type="text"  class="form-control" [(ngModel)]="product.supplier" id="sel1" appCharacter #supplier="ngModel" required ngModel [disabled]="product.disabled">
+          
+          <span class="errorField" *ngIf="supplier.touched&&supplier.errors?.['required']">Required Field Only Character and Spaces Allowed</span> 
+        
+        </td>
+        <td><input type="text"   class="form-control" [(ngModel)]="product.discount" appPercentage  pattern="[0-9]{4}" #discount="ngModel" ngModel required [disabled]="product.disabled">
+        
+          <span  class="errorField"*ngIf="discount.touched&&discount.errors?.['required']">Required Field Only Two digit Numeric value Allowed</span>
+        
+         
+        </td>
+        <td>
+          <div class="btn-group btn-group-sm">
+          <button class="btn btn-primary btn-sm" (click)="toggleEdit(product)">{{ product.disabled ? 'Edit' : 'Save' }}</button>&nbsp;
+         
+         <button  class="btn btn-primary btn-sm"(click)="deleteProduct(product)">Delete</button>
+        </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
